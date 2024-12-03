@@ -1,0 +1,165 @@
+/* Reset and Body Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #f9f3ee, #fdfaf6);
+  color: #2c2c2c;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Header Section */
+header {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(to right, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9be1);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideIn 1.2s ease-out;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.8rem;
+  letter-spacing: 2px;
+  text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  margin-bottom: 10px;
+}
+
+header h1::after {
+  content: '';
+  width: 80px;
+  height: 3px;
+  background: white;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: growLine 1.5s ease-in-out;
+}
+
+/* Content Section */
+.section {
+  margin: 40px auto;
+  max-width: 900px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.section:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 3px;
+  background: linear-gradient(to right, #ff758f, #ff9a76, #ffcf63);
+  animation: shimmer 2s infinite linear;
+}
+
+input[type="file"],
+input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  margin: 15px 0;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  font-size: 1.1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="file"]:focus,
+input[type="text"]:focus {
+  border-color: #ff758f;
+  box-shadow: 0 0 8px rgba(255, 117, 143, 0.4);
+}
+
+/* Buttons */
+button {
+  padding: 12px 30px;
+  margin-top: 15px;
+  background: linear-gradient(to right, #ff758f, #ff9a76);
+  color: white;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(255, 117, 143, 0.3);
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(to right, #ff9a76, #ff758f);
+  box-shadow: 0 12px 25px rgba(255, 117, 143, 0.5);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(to right, #2c2c2c, #333);
+  color: white;
+  font-size: 0.9em;
+}
+
+footer a {
+  color: #ff758f;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #ff9a76;
+}
+
+/* Keyframes for Animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes growLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 80px;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    left: -50%;
+  }
+  to {
+    left: 100%;
+  }
+}

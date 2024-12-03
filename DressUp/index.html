@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DressUp - Your Ultimate Fashion Choice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>DressUp</h1>
+    <p>Your ultimate fashion assistant for events, outfits, and creativity!</p>
+  </header>
+
+  <main>
+    <!-- Upload Section -->
+    <section id="upload-section" class="section">
+      <h2>Upload Your Outfit</h2>
+      <p>Upload a picture of your dress to get matching suggestions.</p>
+      <input type="file" id="uploadInput" accept="image/*">
+      <div id="uploadPreview"></div>
+      <button id="getUploadSuggestions">Get Suggestions</button>
+      <div id="uploadSuggestions"></div>
+    </section>
+
+    <!-- Sketching Section -->
+    <section id="design-section" class="section">
+      <h2>Design Your Style</h2>
+      <canvas id="designCanvas" width="800" height="400"></canvas>
+      <div class="tools">
+        <label for="colorPicker">Choose Color:</label>
+        <input type="color" id="colorPicker" value="#000000">
+        <label for="lineWidth">Brush Size:</label>
+        <input type="range" id="lineWidth" min="1" max="10" value="2">
+        <button id="clearCanvas">Clear Canvas</button>
+        <button id="saveDesign">Save Design</button>
+        <button id="loadSample">Load Sample Dress</button>
+      </div>
+    </section>
+
+    <!-- Event Suggestions Section -->
+    <section id="event-section" class="section">
+      <h2>What’s Your Event?</h2>
+      <p>Enter your event to get outfit recommendations:</p>
+      <input type="text" id="eventInput" placeholder="e.g., Wedding, Party">
+      <button id="addEvent">Add Event</button>
+      <button id="getEventSuggestions">Get Suggestions</button>
+      <div id="eventSuggestions"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 DressUp. All Rights Reserved.</p>
+  </footer>
+
+ <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+ <!-- Main Script -->
+ <script>
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAre9HKNJ5UZooyQLB6jD1euE6AicNh23U",
+  authDomain: "styleup-ec638.firebaseapp.com",
+  projectId: "styleup-ec638",
+  storageBucket: "styleup-ec638.firebasestorage.app",
+  messagingSenderId: "67635686490",
+  appId: "1:67635686490:web:502ebe92d453d6ff3e3c63",
+  measurementId: "G-KKV45GS5D0"
+};
+
+   // Initialize Firebase
+   const app = firebase.initializeApp(firebaseConfig);
+   const database = firebase.database();
+
+   // Add event to database
+   document.getElementById('addEvent').addEventListener('click', () => {
+     const eventInput = document.getElementById('eventInput').value;
+     if (eventInput) {
+       const eventRef = database.ref('events').push();
+       eventRef.set({
+         name: eventInput,
+         timestamp: new Date().toISOString()
+       }).then(() => {
+         alert('Event added successfully!');
+       }).catch((error) => {
+         console.error('Error adding event:', error);
+       });
+     }
+   });
+
+   // Retrieve events from database
+   document.getElementById('getEventSuggestions').addEventListener('click', () => {
+     const eventSuggestionsDiv = document.getElementById('eventSuggestions');
+     eventSuggestionsDiv.innerHTML = '<p>Loading...</p>';
+     const eventsRef = database.ref('events');
+     eventsRef.once('value', (snapshot) => {
+       const data = snapshot.val();
+       eventSuggestionsDiv.innerHTML = '';
+       if (data) {
+         Object.values(data).forEach(event => {
+           eventSuggestionsDiv.innerHTML += `<p>${event.name} - ${new Date(event.timestamp).toLocaleString()}</p>`;
+         });
+       } else {
+         eventSuggestionsDiv.innerHTML = '<p>No events found.</p>';
+       }
+     });
+   });
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
